@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         'sans': ['Plus Jakarta Sans'],
         'serif': ['Quando'],
+        'toast': ['Outfit'],
       }
     },
   },

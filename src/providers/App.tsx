@@ -3,6 +3,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PrimeReactProvider } from 'primereact/api';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ErrorFallback = () => {
   return (
@@ -37,6 +39,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <QueryClientProvider client={queryClient}>
           {/* <AuthProvider> */}
           <PrimeReactProvider>
+            <ToastContainer></ToastContainer>
             <Router>{children}</Router>
           </PrimeReactProvider>
           {/* </AuthProvider> */}

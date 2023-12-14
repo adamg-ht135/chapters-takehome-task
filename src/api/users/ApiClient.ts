@@ -13,9 +13,9 @@ export default class ApiClient {
     return response.data;
   }
   
-  async login({ name , password } : { name: string, password: string}): Promise<UserResponse> {
-    const response = await this.axios.post('/login', {
-      name,
+  async login({ email , password } : { email: string, password: string}): Promise<UserResponse> {
+    const response = await this.axios.post('api/login/', {
+      email,
       password,
     });
     return response.data;

@@ -1,0 +1,9 @@
+.auth-error{
+    position: absolute;
+    background: #EA6363;
+    width: 431px;
+    height: 148px;
+    border-radius: 8px;
+    right: 3.125vw;
+    bottom: 7.5vh;
+}
