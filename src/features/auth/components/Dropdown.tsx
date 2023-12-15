@@ -18,12 +18,12 @@ const Dropdown = () => {
           {option === "admin" && <div className="flex-grow">Admin</div>}
           <img className="h-[10.15px] w-[16.5px] mr-[24.5px]" src={chevrondown}></img>      
         </div>
-        <div className="-mt-0.5 relative pl-[19px] pr-[24px] text-2xl text-primary bg-white font-normal w-[430px] h-[211px] rounded-[7px] border-2 border-mint flex flex-col justify-center">
-            <div className="py-[19px] mt-[6px] ml-[14px]" onClick={() => handleSelect("reader")}>Reader</div>
+        <div className="-mt-0.5 relative pl-[19px] pr-[24px] text-2xl text-primary bg-white font-normal w-[430px] h-[211px] rounded-[7px] border-2 border-mint flex flex-col">
+            <div className={option === 'reader' ? "font-semibold py-[18px] mt-[2px] pl-[14px] hover:bg-gray-300" : "py-[18px] mt-[2px] pl-[14px] hover:bg-gray-300" } onClick={() => handleSelect("reader")}>Reader</div>
             <hr className="text-left solid border-primary"></hr>
-            <div className="py-[19px] ml-[14px]" onClick={() => handleSelect("author")}>Author</div>
-            <hr className="text-left solid border-primary"></hr>
-            <div className="py-[19px] mb-[8px] ml-[14px]" onClick={() => handleSelect("admin")}>Admin</div>
+            <div className="py-[17px] pl-[14px] hover:bg-gray-300" onClick={() => handleSelect("author")}>Author</div>
+            <hr className="text-left solid border-primary hover:bg-gray-300"></hr>
+            <div className="py-[18px] mb-[2px] pl-[14px] hover:bg-gray-300" onClick={() => handleSelect("admin")}>Admin</div>
         </div>
     </div>
   );
