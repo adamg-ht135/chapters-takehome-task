@@ -4,9 +4,10 @@ import splash from '../../../assets/woman-reading-book.png';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Dropdown from '../components/Dropdown';
+import PasswordBox from '../components/PasswordBox';
 
 export const Register = () => {
-  const registerStep = 1
+  const registerStep = 2
 
   return (
     <Layout title="Register your account">
@@ -64,6 +65,22 @@ export const Register = () => {
                   </label>
                   <Dropdown/>
                   <button className="absolute right-[105.23px] bottom-[76.89px] mt-11 bg-primary rounded-md text-2xl text-white w-[161.6px] h-[74.4px]">
+                    Next
+                  </button>
+              </div>
+            </div>
+          )}
+          {registerStep === 2 && (
+              <div className="relative w-[95vw] h-[75vh] max-w-[810px] max-h-[809px] mx-auto flex flex-col px-3 rounded-lg bg-white self-center">
+              <div>
+                <h2 className="pb-4 mb-[44px] mt-[63px] text-center text-4xl md:text-5xl lg:text-6xl font-bold text-primary">Set your password</h2>
+              </div>
+              <hr className="solid border-primary"></hr>
+              <div className="m-auto max-w-[613px] w-full flex flex-col">
+                  <div className="relative w-full h-[86px]">
+                    <PasswordBox></PasswordBox>
+                  </div>
+                  <button className="ml-auto mt-11 bg-primary rounded-md text-2xl text-white w-[161.6px] h-[74.4px]" disabled>
                     Next
                   </button>
               </div>
