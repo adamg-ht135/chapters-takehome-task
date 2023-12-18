@@ -2,13 +2,81 @@ import { Layout } from '../components/Layout';
 import chevronleft from '../../../assets/chevron-left.svg';
 import splash from '../../../assets/woman-reading-book.png';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dropdown from '../components/Dropdown';
 import PasswordBox from '../components/PasswordBox';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, SubmitHandler, FormProvider} from 'react-hook-form';
+import { registerSchema } from '@/features/schemas/registerschemas';
+import ellipse from '../../../assets/ellipse.svg';
+import ellipseTick from '../../../assets/ellipse-tick.svg';
+import { toast } from 'react-toastify'
+import CloseButton from '@/components/Form/CloseButton';
+import '../../stylesheets/toasts.css'
 
+type FormData = {
+  email: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+  password: string;
+  confirm_password: string;
+  marketing_consent: boolean;
+}
 export const Register = () => {
-  const registerStep = 2
+  var registerStep = 2
+  const {register , handleSubmit, formState:{ errors }, watch} = useForm<FormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues:{
+      password: '',
+      confirm_password: ''
+    }
+  });
 
+  const hasUppercase = (password: string) => {
+    return /[A-Z]/.test(password);
+  };
+  const hasLowercase = (password: string) => {
+    return /[a-z]/.test(password);
+  };
+  const hasNumber = (password: string) => {
+    return /[0-9]/.test(password);
+  };
+  const hasSpecial = (password: string) => {
+    return /[^\w\s]/.test(password);
+  };
+
+  const validatePass = () => {
+    var pass = watch("password");
+    if (hasUppercase(pass) && hasLowercase(pass) && hasNumber(pass) && hasSpecial(pass)){
+      if (pass === watch("confirm_password")){
+        registerStep = 0;
+      } else {
+        toast(<div className="absolute top-[29px] left-[39px] font-toast font-medium text-white text-[24px]">Passwords do not match
+        <p className="mt-[8px] font-toast font-normal text-white text-[20px] leading-tight">Make sure your passwords are <br></br> the same.</p>
+        </div>,{
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: CloseButton,
+        position: toast.POSITION.BOTTOM_RIGHT,
+        className:"auth-error"
+        })
+      }
+    } else {
+        toast(<div className="absolute top-[29px] left-[39px] font-toast font-medium text-white text-[24px] leading-tight">Password does not meet requirements
+        <p className="mt-[8px] font-toast font-normal text-white text-[20px]">Please try again.</p>
+        </div>,{
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: CloseButton,
+        position: toast.POSITION.BOTTOM_RIGHT,
+        className:"auth-error"
+        })
+    }
+  };
   return (
     <Layout title="Register your account">
       <div className="absolute left-[117px] top-[123px] flex text-primary text-2xl font-semibold items-center">
@@ -76,13 +144,33 @@ export const Register = () => {
                 <h2 className="pb-4 mb-[44px] mt-[63px] text-center text-4xl md:text-5xl lg:text-6xl font-bold text-primary">Set your password</h2>
               </div>
               <hr className="solid border-primary"></hr>
-              <div className="m-auto max-w-[613px] w-full flex flex-col">
-                  <div className="relative w-full h-[86px]">
-                    <PasswordBox></PasswordBox>
-                  </div>
-                  <button className="ml-auto mt-11 bg-primary rounded-md text-2xl text-white w-[161.6px] h-[74.4px]" disabled>
+              <div className="m-auto max-w-[613px] w-full">
+                <div className="w-full">
+                    <label className="block mb-[11px] text-2xl text-primary font-semibold">
+                      Password
+                    </label>
+                    <PasswordBox resolver={{...register('password')}}></PasswordBox>
+                    <label className="block mt-[21px] mb-[11px] text-2xl text-primary font-semibold">
+                      Confirm Password
+                    </label>
+                    <PasswordBox resolver={{...register('confirm_password')}}></PasswordBox>
+                    <div className="w-[120%] mt-[28px] font-semibold text-sm text-primary leading-normal">
+                      Password requirements:
+                      <div className="flex text-sm text-primary font-medium leading-normal gap-[17.72px]">
+                        <div className="flex items-center"><img className="w-[17px] h-[17px] mr-[7.86px]" src={hasUppercase(watch("password")) ? ellipseTick : ellipse}></img>1 capital letter</div>
+                        <div className="flex items-center"><img className="w-[17px] h-[17px] mr-[7.86px]" src={hasLowercase(watch("password")) ? ellipseTick : ellipse}></img>1 lowercase letter</div>
+                        <div className="flex items-center"><img className="w-[17px] h-[17px] mr-[7.86px]" src={hasNumber(watch("password")) ? ellipseTick : ellipse}></img>1 number</div>
+                        <div className="flex items-center"><img className="w-[17px] h-[17px] mr-[7.86px]" src={hasSpecial(watch("password")) ? ellipseTick : ellipse}></img>1 special character. (e.g. _!*/)</div>
+                      </div>
+                    </div>
+                  <button 
+                  type="button"
+                  onClick={validatePass}
+                  disabled={!(watch("password").length > 0 && watch("confirm_password").length > 0 )} 
+                  className="float-right mt-[52px] bg-primary rounded-md font-semibold text-2xl text-white w-[161.6px] h-[74.4px] disabled:bg-zinc-400">
                     Next
                   </button>
+                </div>
               </div>
             </div>
           )}
