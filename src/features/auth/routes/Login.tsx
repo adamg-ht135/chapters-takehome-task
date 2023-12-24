@@ -33,7 +33,7 @@ export const Login = () => {
         toast.success('Successfully logged in!')
       }).catch((error) => {
         if (error.response.data.message == "Invalid username or password!!"){
-          toast(<div className="absolute top-[31px] left-[39px] font-toast font-medium text-white text-[24px]">Email or Password is Incorrect
+          toast(<div className="absolute top-[29px] left-[39px] font-toast font-medium text-white text-[24px]">Email or Password is Incorrect
             <p className="mt-[8px] font-toast font-normal text-white text-[20px]">Please try again</p>
             </div>,{
             autoClose: false,
