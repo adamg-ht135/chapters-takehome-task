@@ -2,11 +2,12 @@ import { Layout } from '../components/Layout';
 import chevronleft from '../../../assets/chevron-left.svg';
 import splash from '../../../assets/woman-reading-book.png';
 import { Link } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Dropdown from '../components/Dropdown';
 import PasswordBox from '../components/PasswordBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider} from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { registerSchema } from '@/features/schemas/registerschemas';
 import ellipse from '../../../assets/ellipse.svg';
 import ellipseTick from '../../../assets/ellipse-tick.svg';
@@ -35,6 +36,7 @@ export const Register = () => {
   const [tnc, setTnc] = useState(false);
   const [marketConsent, setMC] = useState(false);
   const [option, setOption] = useState('');
+  const navigate = useNavigate();
 
   const {register , 
          handleSubmit, 
@@ -155,10 +157,17 @@ export const Register = () => {
     const username = fUser[0] + lUser[0] + suffix.toString();
     const {confirm_password, ...rest} = data
     rest.username = username;
-    console.log(rest)
-    debugger;
     ApiClient.users.register(rest).then((response) => {
-        toast.success('Successfully registered account!')
+      toast.success("Successfully registered");
+      ApiClient.users.login({email: rest.email, password: rest.password}).then((LoginResponse) => {
+        const responseData = JSON.parse(JSON.stringify(LoginResponse));
+        console.log(responseData);
+        sessionStorage.setItem('role', responseData.user.role);
+        sessionStorage.setItem('token', responseData.token);
+        sessionStorage.setItem('id', responseData.user.id);
+        sessionStorage.setItem('auth', 'true');
+        navigate('/');
+      });
     }).catch((error) => {
         toast(<div className="absolute top-[29px] left-[39px] font-toast font-medium text-white text-[24px]">{error.response.data.message}
           <p className="mt-[8px] font-toast font-normal text-white text-[20px]">Please try again</p>

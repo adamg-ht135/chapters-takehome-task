@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import chevrondown from '../../../assets/chevron-down.svg';
+import chevronup from '../../../assets/chevron-up.svg';
 import tick from '../../../assets/tick.svg';
 
 const Dropdown = ({dropdownOption, setDropdown}:{dropdownOption: string, setDropdown: any}) => {
@@ -32,7 +33,7 @@ const Dropdown = ({dropdownOption, setDropdown}:{dropdownOption: string, setDrop
     <div className="max-w-[431px]"ref={elementRef}>
         <button type="button" onClick={toggleElement} className="text-left pl-[33px] text-2xl text-primary font-normal w-[430px] h-[86px] rounded-[7px] border-2 border-mint flex items-center">
           {dropdownOption === "" ? <div className="flex-grow text-mint">Select</div>:<div className="flex-grow text-primary">{dropdownOption}</div>}
-          <img className="h-[10.15px] w-[16.5px] mr-[24.5px]" src={chevrondown}></img>      
+          <img className="h-[10.15px] w-[16.5px] mr-[24.5px]" src={isElementVisible ? chevronup : chevrondown}></img>      
         </button>
         {isElementVisible &&
         <div className="-mt-0.5 relative pl-[19px] pr-[24px] text-2xl text-primary bg-white font-normal w-[430px] h-[211px] rounded-[7px] border-2 border-mint flex flex-col justify-center">

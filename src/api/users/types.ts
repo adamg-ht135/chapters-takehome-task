@@ -1,7 +1,25 @@
-import { BaseEntity } from '@/types';
+export type LoginResponse = {
+  data: UserResponse
+}
 
 export type UserResponse = {
-  name: string;
+  message: string;
+  user: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    role: string;
+    marketing_consent: boolean;
+  },  
+  token: string;
+}
+
+export type UserList = {
+  id: number;
+  first_name: string;
+  last_name: string;
   email: string;
-  phone: number;
-} & BaseEntity;
+  role: string;
+  marketing_consent: boolean;
+}

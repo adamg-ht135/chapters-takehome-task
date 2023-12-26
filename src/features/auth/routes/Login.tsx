@@ -2,14 +2,14 @@ import { Layout } from '../components/Layout';
 import eye from '../../../assets/eye.svg';
 import eyeclosed from '../../../assets/eye-closed.svg';
 import chevronleft from '../../../assets/chevron-left.svg';
-import { Link } from 'react-router-dom';
 import splash from '../../../assets/girl-with-books.png';
 import { useState } from 'react';
 import { useForm, SubmitHandler} from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '@/features/schemas/loginschemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ApiClient from '@/api';
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import CloseButton from '@/components/Form/CloseButton';
 import '../../stylesheets/toasts.css'
 
@@ -28,9 +28,17 @@ export const Login = () => {
     setEyes(!eyes);
   }
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
       ApiClient.users.login(data).then((response) => {
-        toast.success('Successfully logged in!')
+        const responseData = JSON.parse(JSON.stringify(response));
+        toast.success(responseData.message);
+        sessionStorage.setItem('role', responseData.user.role);
+        sessionStorage.setItem('id', responseData.user.id);
+        sessionStorage.setItem('token', responseData.token)
+        sessionStorage.setItem('auth', 'true');
+        navigate('/');
       }).catch((error) => {
         if (error.response.data.message == "Invalid username or password!!"){
           toast(<div className="absolute top-[29px] left-[39px] font-toast font-medium text-white text-[24px]">Email or Password is Incorrect
@@ -67,13 +75,13 @@ export const Login = () => {
                 <label className="mb-4 text-2xl text-primary font-semibold">
                   Email
                 </label>
-                <input type="text" className="pl-[26px] text-2xl text-primary font-normal w-full h-[86px] self-center rounded-[7px] border-2 border-mint" {...register('email')}></input>
+                <input type="text" className="px-[26px] text-2xl text-primary font-normal w-full h-[86px] self-center rounded-[7px] border-2 border-mint" {...register('email')}></input>
                 <span className="text-lg text-red-500">{errors.email?.message}</span>
                 <label className="mt-5 mb-4 text-2xl text-primary font-semibold">
                   Password
                 </label>
                 <div className="relative w-full h-[86px]">
-                  <input className="pl-[26px] text-2xl text-primary font-normal absolute w-full h-[86px] self-center rounded-[7px]  border-2 border-mint" type={eyes ? "password" : "text"} {...register('password')}></input>
+                  <input className="px-[26px] text-2xl text-primary font-normal absolute w-full h-[86px] self-center rounded-[7px]  border-2 border-mint" type={eyes ? "password" : "text"} {...register('password')}></input>
                   <button type="button" className="relative float-right my-8 mr-6 w-8 h-6 border-none z-5" onClick={handleEyes}>
                     <img src={eyes ? eye : eyeclosed}></img>
                   </button>
