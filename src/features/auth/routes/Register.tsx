@@ -64,7 +64,9 @@ export const Register = () => {
 
   const handleBack = () => {
     if (registerStep > 0){
-      setRegisterStep(registerStep - 1)
+      setRegisterStep(registerStep - 1);
+    } else {
+      navigate("/");
     }
   }
 

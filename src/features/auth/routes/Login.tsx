@@ -5,7 +5,7 @@ import chevronleft from '../../../assets/chevron-left.svg';
 import splash from '../../../assets/girl-with-books.png';
 import { useState } from 'react';
 import { useForm, SubmitHandler} from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginSchema } from '@/features/schemas/loginschemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ApiClient from '@/api';
@@ -57,10 +57,10 @@ export const Login = () => {
 
   return (
     <Layout title={''}>
-      <div className="absolute left-[117px] top-[123px] flex text-primary text-2xl font-semibold items-center">
+      <Link to="/" className="absolute left-[117px] top-[123px] flex text-primary text-2xl font-semibold items-center z-10">
             <img className="mt-[2px] mr-[10px] w-[8px] h-[13px]" src={chevronleft}></img>
             Back
-      </div>
+      </Link>
       <div className="absolute right-[107px] top-[100px] text-primary text-5xl font-normal font-serif">
             Chapters
       </div>
