@@ -57,9 +57,11 @@ export const Login = () => {
 
   return (
     <Layout title={''}>
-      <Link to="/" className="absolute left-[117px] top-[123px] flex text-primary text-2xl font-semibold items-center z-10">
+      <Link to="/">
+      <div className="absolute left-[117px] top-[123px] flex text-primary text-2xl font-semibold items-center z-10">
             <img className="mt-[2px] mr-[10px] w-[8px] h-[13px]" src={chevronleft}></img>
             Back
+      </div>
       </Link>
       <div className="absolute right-[107px] top-[100px] text-primary text-5xl font-normal font-serif">
             Chapters
