@@ -5,6 +5,7 @@ export default class ApiClient {
 
   constructor(axios: AxiosInstance) {
     this.axios = axios;
+    axios.defaults.withCredentials = true;
   }
 
   async readBook(token: string, id: number): Promise<any> {
